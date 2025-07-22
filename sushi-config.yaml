@@ -1,0 +1,14 @@
+id: igfhir
+canonical: http://example.org/fhir/ImplementationGuide/igfhir
+name: IGFHIR
+title: Guía FHIR automática
+status: draft
+version: 1.0.0
+fhirVersion: 4.0.1
+copyright: "© 2025 Tu organización"
+publisher:
+  name: Tu Organización
+  url: http://example.org
+description: >
+  Guía de implementación FHIR creada automáticamente sin preguntas interactivas.
+
