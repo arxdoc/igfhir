@@ -1,0 +1,36 @@
+name: Run SUSHI and Push Changes
+
+on:
+  push:
+    branches:
+      - main  # Se ejecuta cuando hay push a la rama main
+  workflow_dispatch:  # Permite ejecutarlo manualmente desde GitHub
+
+jobs:
+  run-sushi-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Checkout del repositorio
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Necesario para hacer push después
+
+      # Paso 2: Ejecutar SUSHI en un contenedor Docker
+      - name: Run SUSHI
+        run: |
+          docker run -it --rm -v $(pwd):/workspaces ghcr.io/bonfhir/ig-toolbox sushi /workspaces
+
+      # Paso 3: Configurar Git para el push
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      # Paso 4: Hacer commit y push de los cambios generados por SUSHI
+      - name: Commit and Push Changes
+        run: |
+          git add .
+          git commit -m "Automated update: SUSHI-generated files"
+          git push
